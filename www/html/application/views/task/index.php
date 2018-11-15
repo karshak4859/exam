@@ -17,5 +17,5 @@
     <?php } ?>
 </table>
 
-<a href="/create.php">create</a>
+<a href="/www/html/create.php">create</a>
 

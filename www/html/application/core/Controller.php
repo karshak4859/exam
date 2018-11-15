@@ -11,5 +11,11 @@ abstract class Controller
     public function __construct($rout){
         $this->rout=$rout;
         $this->view= new View($rout);
+        $this->loadModel($rout['controller']);
+    }
+
+    public function loadModel($name){
+        $path = 'application/models/'.$name.'.php';
+        //debug($path);
     }
 }
