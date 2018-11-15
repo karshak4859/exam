@@ -1,8 +1,8 @@
 <?php
 
 return [
-	'host' => '',
-	'name' => '',
-	'user' => '',
-	'password' => '',
+	'host' => 'test-mariadb',
+	'name' => 'db',
+	'user' => 'root',
+	'password' => 'password',
 ];
