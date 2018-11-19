@@ -2,19 +2,24 @@
 
 return [
 
-	'www/html/index.php' => [
+	'task/' => [
 		'controller' => 'task',
 		'action' => 'index',
 	],
 
-	'www/html/create.php' => [
+	'task/create' => [
 		'controller' => 'task',
 		'action' => 'create',
 	],
 
-	'www/html/edit.php' => [
+	'task/delete' => [
 		'controller' => 'task',
-		'action' => 'edit',
+		'action' => 'delete',
 	],
+
+    'task/edit' => [
+        'controller' => 'task',
+        'action' => 'edit',
+    ],
 	
 ];

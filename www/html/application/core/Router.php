@@ -18,23 +18,28 @@ class Router
         foreach ($arr as $key => $val) {
             $this->add($key, $val);
         }
+
     }
 
     public function add($route, $params)
     {
-        $route = '#^' . $route . '$#';
+        //$route = '#^' . $route . '$#';
         $this->routes[$route] = $params;
+
+
+
     }
 
-    public function redirect($url){
+   /* public function redirect($url){
         header('Location:'.$url);
-    }
+    }*/
 
     public function match()
     {
-        $url = trim($_SERVER['REQUEST_URI'], '/');
+        $url = $_GET['q'];
         foreach ($this->routes as $route => $params) {
-            if (preg_match($route, $url, $matches)) {
+            //if (preg_match($route, $url, $matches)) {
+            if ($route === $url) {
                 $this->params = $params;
                 return true;
             }
@@ -45,6 +50,7 @@ class Router
 
     public function run()
     {
+
         if ($this->match()) {
             $path = 'application\controllers\\' . ucfirst($this->params['controller']) . 'Controller';
             if (class_exists($path)) {

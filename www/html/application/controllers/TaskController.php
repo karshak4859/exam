@@ -34,25 +34,73 @@ class TaskController extends Controller
         $this->view->render('главная страница');
 
         $db = new Db;
-        $params = [
-            'task'=>$_POST['task'],
-            'description'=>$_POST['description'],
-            'dateCreate'=> $_POST['dateCreate']
-        ];
-        $data = $db->query('INSERT INTO tasks (task , description , dateCreate) 
-                                VALUES (:task, :description, :dateCreate) ',$params);
-        /*$pdo = new \PDO('mysql:host=test-mariadb;dbname=db', 'root', 'password');
+        if(isset($_POST['task']) && isset($_POST['description'])) {
+            $params = [
+                'task' => $_POST['task'],
+                'description' => $_POST['description'],
+                'dateCreate' => $_POST['dateCreate']
+            ];
+            $data = $db->query('INSERT INTO tasks (task , description , dateCreate)  
+                                    VALUES (:task, :description, :dateCreate) ', $params);
 
-        $stmt = $pdo->prepare("INSERT INTO tasks (task , description , dateCreate) VALUES (:task, :description, :dateCreate)");
-        $stmt->bindValue('task', $_POST['task']);
-        $stmt->bindValue('description', $_POST['description']);
-        $stmt->bindValue('dateCreate', $_POST['dateCreate']);
+        }
 
-        $stmt->execute();*/
+
 
     }
     public function deleteAction()
     {
+        $this->view->render('главная страница');
+        $db = new Db;
+        if(isset($_GET['id'])) {
+            $params = [
+                'id' => $_GET['id'],
+            ];
+            $data = $db->query('DELETE from tasks WHERE  id = :id', $params);
+
+        }
+
+
+    }
+    public function editAction()
+    {
+        $db = new Db;
+        if(isset($_GET['id'])) {
+            $params = [
+                'id' => $_GET['id'],
+            ];
+            $data = $db->column('SELECT * from tasks WHERE id=:id', $params);
+            $vars = [
+                'param' => $data,
+            ];
+            $this->view->render('главная страница', $vars);
+
+            $db = new Db;
+            if(isset($_POST['task']) && isset($_POST['description']) && isset($_POST['dateCreate'])){
+
+                $params = [
+                    'id'=>$_GET['id'],
+                    'task' => $_POST['task'],
+                    'description' => $_POST['description'],
+                    'dateCreate' => $_POST['dateCreate']
+                ];
+                $stmt = $db->prepare("UPDATE tasks 
+                             SET task= :task , description= :description, dateCreate=:dateCreate 
+                             WHERE id= :id",$params);
+
+
+
+            }
+        }
+        else{
+
+            $this->view->render('главная страница');
+
+        }
+
+
+        //header("Location: /task/");
+
 
     }
 
